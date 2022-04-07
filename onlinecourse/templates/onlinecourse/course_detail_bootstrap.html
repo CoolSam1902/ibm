@@ -77,14 +77,12 @@
 
              A choice submission form example
             <form id="questionform" action="point to a submit view" method="post">
-                        ... for each question in the course ... a
-                        {% for question in course %}
+                        {% for question in course.question_set.all %}
                         <div class="card mt-1">
                             <div class="card-header"><h5>{{ question.question_content}}</h5></div>
                             {% csrf_token %}
                             <div class="form-group">
-                               ... for each choice in the question ...
-                               {% for choice in question %}
+                               {% for choice in question.choice_set.all %}
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input type="checkbox" name="choice_{{choice.id}}"

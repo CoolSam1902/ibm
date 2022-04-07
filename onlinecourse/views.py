@@ -86,6 +86,7 @@ class CourseListView(generic.ListView):
 
 class CourseDetailView(generic.DetailView):
     model = Course
+    print("-> " + str(Course))
     template_name = 'onlinecourse/course_detail_bootstrap.html'
 
 
