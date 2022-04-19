@@ -101,7 +101,7 @@ def enroll(request, course_id):
         course.total_enrollment += 1
         course.save()
 
-    return HttpResponseRedirect(reverse(viewname='onlinecourse:course_details', args=(course.id)))
+    return HttpResponseRedirect(reverse(viewname='onlinecourse:course_details', args=(course.id,)))
 
 def submit(request, course_id):
     course = Course.objects.get(pk=course_id)
@@ -111,14 +111,13 @@ def submit(request, course_id):
     for i in awnsers:
         choise = Choice.objects.get(pk=i)
         submission.choices.add(choise)
-        
-    Submission.save()
-    return HttpResponseRedirect(reverse(viewname='onlinecourse:exam_result', args=(course.id, 0)))
+
+    submission.save()
+    return HttpResponseRedirect(reverse(viewname='onlinecourse:exam_result', args=(course.id, submission.id)))
 
 def show_exam_result(request, course_id, submission_id):
     course = Course.objects.get(pk=course_id)
     submission = Submission.objects.get(pk=submission_id)
-
 
     context = {
         
