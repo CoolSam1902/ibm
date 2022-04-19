@@ -25,6 +25,12 @@ class CourseAdmin(admin.ModelAdmin):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title']
 
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['choice_content']
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['question_content']
+
 
 # <HINT> Register Question and Choice models here
 
