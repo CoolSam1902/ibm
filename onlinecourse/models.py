@@ -101,6 +101,12 @@ class Question(models.Model):
     grade_point = models.IntegerField()
     question_content = models.CharField(max_length=60)
 
+    def serialize(self):
+        return {
+            "grade": self.grade_point,
+            "content": self.question_content
+        }
+
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
         selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
@@ -115,10 +121,22 @@ class Choice(models.Model):
     choice_content = models.CharField(max_length=60)
     choice_correctness = models.BooleanField()
 
+    def serialize(self):
+        return {
+            "question": self.question.question_content,
+            "content": self.choice_content,
+            "correctness": self.choice_correctness
+        }
+
 
 class Submission(models.Model):
     enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choice)
+
+    def serialize(self):
+        return {
+            "choices": [choice.serialize() for choice in self.choices.all()]
+        }
 
 # <HINT> Create a Question Model with:
     # Used to persist question content for a course

@@ -118,9 +118,19 @@ def submit(request, course_id):
 def show_exam_result(request, course_id, submission_id):
     course = Course.objects.get(pk=course_id)
     submission = Submission.objects.get(pk=submission_id)
+    s_submission = submission.serialize()
+    questions = course.question_set.all
+    max_grade = len(s_submission['choices'])
+    grade = 0
 
-    context = {
+    for choice in s_submission['choices']:
+        if choice['correctness'] is True:
+            grade += 1
         
+    context = {
+        "submission": s_submission,
+        "grade": (grade / max_grade) * 100,
+        "questions": questions
     }
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 

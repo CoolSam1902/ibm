@@ -30,7 +30,6 @@ class LessonAdmin(admin.ModelAdmin):
 
 class ChoiceAdmin(admin.ModelAdmin):
     list_display = ('question', 'choice_content')
-    fields = ('question.question_content', 'choice_content')
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
