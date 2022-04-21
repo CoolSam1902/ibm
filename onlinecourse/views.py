@@ -129,7 +129,7 @@ def show_exam_result(request, course_id, submission_id):
         
     context = {
         "submission": s_submission,
-        "grade": (grade / max_grade) * 100,
+        "grade": round((grade / max_grade) * 100, 2),
         "questions": questions
     }
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)

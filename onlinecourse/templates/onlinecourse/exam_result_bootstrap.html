@@ -34,17 +34,16 @@
         </ul>
     </div>
 </nav>
-asdasdada
 <div class="container-fluid">
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
-       You passed! {{ grade }}%
+       <b>Congratulations {{ user.username }}!</b> You have passed the exam and completed the course with a score of {{ grade }}%
     </div>
         {% else %}
         <div class="alert alert-danger">
             <!--HINT Display failed info -->
-            You Failed! {{ grade }}%
+            <b>Failed</b> Sorry, {{user.username}}! You have failed the exam with a score of {{ grade }}%
         </div>
         
         {% endif %}
@@ -54,13 +53,19 @@ asdasdada
         {% for question in questions %}
             <div class="card-header"><h5>{{ question.question_content }}</h5></div>
             {% for choice in submission.choices %}
+                {% if choice.question == question.question_content %}
                 <div class="form-group">
                     <div class="form-check">
                         <label class="form-check-label">
-                            {{ choice.content }}
+                            {% if choice.correctness is True %}
+                                <p class="text-success">Correct awnser: {{ choice.content }}</p>
+                            {% else %}
+                                {{ choice.content }}
+                            {% endif %}
                         </label>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         {% endfor %}
         </div>
